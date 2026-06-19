@@ -11,7 +11,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const dateStr = post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
-<Base title={`${post.data.title} — Foot Morning America`}>
+<Base title={`${post.data.title} — Foot Morning America`} description={post.data.description}>
   <article class="mx-auto max-w-2xl py-8">
     <a href="/news" class="dateline text-xs underline hover:text-red">← All foot news</a>
     <p class="dateline mt-4 text-xs text-red">Foot News Wire · {dateStr}</p>

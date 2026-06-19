@@ -1,0 +1,31 @@
+---
+// Source for the static Open Graph share image. Rendered at 1200x630 and
+// screenshotted into public/og.png. Not linked anywhere in the site.
+import '../styles/global.css';
+---
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Spectral:wght@600&family=Special+Elite&family=UnifrakturCook:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div style="width:1200px;height:630px;overflow:hidden" class="flex flex-col bg-paper text-ink">
+      <div class="flag-stripes" style="height:20px"></div>
+      <div class="star-band py-2 text-center">
+        <p class="dateline text-base tracking-[0.4em]">★ ★ ★&ensp;The United States of Feet&ensp;★ ★ ★</p>
+      </div>
+      <div class="flex flex-1 flex-col items-center justify-center px-20 text-center">
+        <p class="stamp text-xl">Extra! Extra!</p>
+        <p style="font-family: var(--font-masthead)" class="mt-5 text-7xl leading-none">Foot Morning America</p>
+        <p class="mt-6 text-5xl" style="font-family: var(--font-headline)">EVERY GOOD FOOT, IN ONE PLACE.</p>
+        <p class="mt-5 text-2xl">The free directory of the internet's foot creators. 🦶</p>
+      </div>
+      <div class="flag-stripes" style="height:20px"></div>
+    </div>
+  </body>
+</html>

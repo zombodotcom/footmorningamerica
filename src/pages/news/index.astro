@@ -8,7 +8,7 @@ const posts = (await getCollection('news', ({ data }) => !data.draft)).sort(
 const [lead, ...rest] = posts;
 const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
-<Base title="News — Foot Morning America">
+<Base title="News — Foot Morning America" description="Foot news, forecasts, and dispatches from the front lines of feet — filed by Footy.">
   <section class="py-8">
     <div class="flex items-center justify-between">
       <h1 class="text-4xl sm:text-5xl">Foot News</h1>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://footmorningamerica.com/sitemap-index.xml
