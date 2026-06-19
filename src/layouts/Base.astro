@@ -1,6 +1,14 @@
 ---
 import Footer from '../components/Footer.astro';
 import AgeGate from '../components/AgeGate.astro';
+// Self-hosted fonts (served from our own origin — reliable on mobile, no Google CDN dependency).
+import '@fontsource/unifrakturcook/700.css';
+import '@fontsource/anton';
+import '@fontsource/special-elite';
+import '@fontsource/spectral/400.css';
+import '@fontsource/spectral/400-italic.css';
+import '@fontsource/spectral/600.css';
+import '@fontsource/spectral/800.css';
 import '../styles/global.css';
 const {
   title = 'Foot Morning America',
@@ -48,13 +56,6 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Spectral:ital,wght@0,400;0,600;0,800;1,400&family=Special+Elite&family=UnifrakturCook:wght@700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body class="min-h-screen">
     <!-- Utility bar -->

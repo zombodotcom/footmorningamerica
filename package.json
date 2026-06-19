@@ -17,6 +17,10 @@
   "dependencies": {
     "@astrojs/netlify": "^7.0.13",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/anton": "^5.2.7",
+    "@fontsource/special-elite": "^5.2.8",
+    "@fontsource/spectral": "^5.2.8",
+    "@fontsource/unifrakturcook": "^5.2.8",
     "@supabase/supabase-js": "^2.95.0",
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^6.4.7",
