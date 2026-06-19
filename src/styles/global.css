@@ -47,8 +47,8 @@
 .flag-stripes {
   background-image: repeating-linear-gradient(
     to bottom,
-    var(--color-red) 0 3px,
-    #fbf7ea 3px 6px
+    var(--color-red) 0 2px,
+    #fbf7ea 2px 4px
   );
 }
 .star-band {

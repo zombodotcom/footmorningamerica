@@ -57,45 +57,43 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     />
   </head>
   <body class="min-h-screen">
-    <!-- Old-glory stripe band -->
-    <div class="flag-stripes h-2.5 w-full"></div>
+    <!-- Utility bar -->
+    <div class="bg-navy text-paper">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-1.5">
+        <p class="dateline text-[10px] tracking-wider">Weekend Edition</p>
+        <p class="dateline hidden text-[10px] tracking-wider sm:block">America's Foot-Content Directory</p>
+        <p class="dateline text-[10px] tracking-wider">Forecast: Toes Out</p>
+      </div>
+    </div>
+    <!-- Flag accent -->
+    <div class="flag-stripes h-2 w-full"></div>
 
-    <header class="mx-auto max-w-6xl px-4 pt-3 sm:pt-4">
-      <!-- Masthead -->
-      <div class="grid grid-cols-1 items-end gap-1 pb-2 sm:grid-cols-3 sm:gap-2">
-        <p class="dateline hidden text-[10px] leading-tight sm:block sm:text-xs">
-          Vol. I — No. 1<br />Weekend Edition<br />Est. This Morning
-        </p>
-        <p style="font-family: var(--font-masthead)" class="text-center text-4xl leading-none sm:text-5xl">
-          <a href="/">Foot Morning America</a>
-        </p>
-        <p class="dateline hidden text-right text-[10px] leading-tight sm:block sm:text-xs">
-          Price: Free<br />Forecast: Toes Out<br />Weather: Humid
-        </p>
-      </div>
-      <!-- Star band -->
-      <div class="star-band -mx-4 px-4 py-1 text-center">
-        <p class="dateline text-[9px] tracking-[0.3em] sm:text-[11px] sm:tracking-[0.35em]">
-          ★ ★ ★&ensp;The United States of Feet&ensp;★ ★ ★
-        </p>
-      </div>
-      <!-- Section index -->
-      <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 py-2 text-xs uppercase sm:gap-x-6 sm:text-sm" aria-label="Sections">
+    <!-- Masthead -->
+    <header class="mx-auto max-w-6xl px-4 pb-5 pt-7 text-center sm:pt-9">
+      <a href="/" style="font-family: var(--font-masthead)" class="inline-block text-5xl leading-none sm:text-6xl">Foot Morning America</a>
+      <p class="dateline mt-3 text-[10px] tracking-[0.35em] text-ink/55 sm:text-[11px]">★&ensp;The United States of Feet&ensp;★</p>
+    </header>
+
+    <!-- Sticky section nav -->
+    <nav class="sticky top-0 z-40 border-y-2 border-ink bg-paper/90 backdrop-blur" aria-label="Sections">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-1 px-4 py-3 text-xs uppercase sm:gap-x-7 sm:text-sm">
         {sections.map((s) => (
           <a
             href={s.href}
             class:list={[
-              'dateline transition-colors hover:text-red',
-              isActive(s.href) ? 'text-red underline underline-offset-4' : 'text-ink',
+              'dateline relative pb-1 transition-colors',
+              isActive(s.href) ? 'text-red' : 'text-ink hover:text-red',
             ]}
             aria-current={isActive(s.href) ? 'page' : undefined}
-          >{s.label}</a>
+          >
+            {s.label}
+            {isActive(s.href) && <span class="absolute -bottom-[3px] left-0 h-[3px] w-full bg-red"></span>}
+          </a>
         ))}
-      </nav>
-      <div class="rule-double"></div>
-    </header>
+      </div>
+    </nav>
 
-    <main class="mx-auto max-w-6xl px-4"><slot /></main>
+    <main class="mx-auto max-w-6xl px-4 pt-4"><slot /></main>
 
     <Footer />
     {gated && <AgeGate />}
