@@ -5,9 +5,9 @@ import '../styles/global.css';
 const { title = 'Foot Morning America', gated = false } = Astro.props;
 const path = Astro.url.pathname;
 const sections = [
-  { href: '/', label: 'Front Page' },
-  { href: '/news', label: 'Foot News' },
-  { href: '/directory', label: 'The Directory' },
+  { href: '/', label: 'Home' },
+  { href: '/news', label: 'News' },
+  { href: '/directory', label: 'Directory' },
   { href: '/get-featured', label: 'Get Featured' },
 ];
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
@@ -51,7 +51,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
         </p>
       </div>
       <!-- Section index -->
-      <nav class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 py-2 text-xs sm:text-sm" aria-label="Sections">
+      <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 py-2 text-xs uppercase sm:gap-x-6 sm:text-sm" aria-label="Sections">
         {sections.map((s) => (
           <a
             href={s.href}

@@ -1,10 +1,22 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import { anonClient } from '../lib/supabase';
+import { getApprovedListings } from '../lib/listings.repo';
+import { buildCreatorUrl } from '../lib/affiliate';
 
 const posts = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
+
+// Creator of the Week — newest approved listing (resilient if Supabase hiccups).
+let cotw = null;
+try {
+  const approved = await getApprovedListings(anonClient());
+  cotw = approved[0] ?? null;
+} catch {
+  cotw = null;
+}
 
 const tickerItems = [
   'Local man owns two feet, reportedly “normal about it”',
@@ -13,10 +25,21 @@ const tickerItems = [
   'Footy spotted buying lotion in bulk',
   'Nation’s arches at all-time high',
 ];
+
+// Parody power rankings — public figures rated for laughs, à la WikiFeet culture.
+const rankings = [
+  { name: 'Emma Stone', stars: '★★★★★', trend: '—', note: 'Critics agree: best arches in the business.' },
+  { name: 'Emma Watson', stars: '★★★★★', trend: '▲', note: 'A perennial powerhouse.' },
+  { name: 'Selena Gomez', stars: '★★★★☆', trend: '▲', note: 'Surging in the polls this week.' },
+  { name: 'Taylor Swift', stars: '★★★★☆', trend: '▲', note: 'Cracked the top 10. Swifties mobilizing.' },
+  { name: 'Margot Robbie', stars: '★★★★☆', trend: '▼', note: 'Slight dip. Still box-office feet.' },
+  { name: 'Mila Kunis', stars: '★★★★☆', trend: '▲', note: 'Quiet climber, No. 19 and rising.' },
+];
+const trendColor = (t: string) => (t === '▲' ? 'text-navy' : t === '▼' ? 'text-red' : 'text-ink/40');
 ---
 <Base title="Foot Morning America — America's Foot-Content Directory">
   <!-- Breaking ticker -->
-  <div class="ticker -mx-4 mb-4 bg-red px-4 py-2 text-paper">
+  <div class="ticker -mx-4 bg-red px-4 py-2 text-paper">
     <div class="ticker-track">
       {[...tickerItems, ...tickerItems].map((t) => (
         <span class="dateline text-xs">★ Breaking Soles: {t}</span>
@@ -25,16 +48,16 @@ const tickerItems = [
   </div>
 
   <!-- Lead story -->
-  <section class="grid gap-6 pb-8 lg:grid-cols-[1.6fr_1fr]">
+  <section class="grid gap-8 py-10 lg:grid-cols-[1.6fr_1fr] lg:gap-10">
     <div>
       <p class="stamp text-sm">Extra! Extra!</p>
-      <h1 class="mt-4 text-5xl sm:text-7xl">Every good foot, in one place.</h1>
-      <p class="mt-4 max-w-prose text-lg leading-relaxed">
+      <h1 class="mt-5 text-5xl sm:text-7xl">Every good foot, in one place.</h1>
+      <p class="mt-5 max-w-prose text-lg leading-relaxed">
         <span class="font-semibold">Foot Morning America</span> is the free directory of the
         internet's foot creators. Browse them here, then follow and support them on their own
         platforms. Your host: <span class="font-semibold">Footy</span>.
       </p>
-      <div class="mt-6 flex flex-wrap gap-3">
+      <div class="mt-7 flex flex-wrap gap-3">
         <a href="/directory" class="border-2 border-ink bg-ink px-7 py-3 text-lg uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">Browse the Directory →</a>
         <a href="/get-featured" class="border-2 border-ink px-7 py-3 text-lg uppercase tracking-wide hover:bg-paper-dim" style="font-family: var(--font-headline)">Get Featured →</a>
       </div>
@@ -43,7 +66,7 @@ const tickerItems = [
     <!-- Footy "file photo" -->
     <figure class="self-start border-2 border-ink">
       <p class="star-band dateline px-3 py-1 text-center text-[10px] tracking-[0.25em]">★ America's Host ★</p>
-      <div class="halftone flex items-center justify-center bg-paper-dim py-8 text-8xl">🦶</div>
+      <div class="halftone flex items-center justify-center bg-paper-dim py-10 text-8xl">🦶</div>
       <figcaption class="dateline border-t border-ink px-3 py-2 text-[11px]">
         File photo: Footy, your host. (Actual feet may vary.)
       </figcaption>
@@ -52,31 +75,68 @@ const tickerItems = [
 
   <div class="rule-double"></div>
 
-  <!-- How it works, as columns -->
-  <section class="grid gap-x-8 gap-y-6 py-8 sm:grid-cols-3">
+  <!-- Power rankings + Creator of the Week -->
+  <section class="grid gap-8 py-10 lg:grid-cols-[1.6fr_1fr] lg:gap-10">
     <div>
-      <p class="dateline text-xs text-red">Section A</p>
-      <h3 class="mt-1 text-2xl">Discover</h3>
-      <p class="mt-2 leading-relaxed">Browse foot creators in the directory — free, no signup, no nonsense.</p>
+      <p class="dateline text-xs text-red">This Week in Feet</p>
+      <h2 class="mt-1 text-3xl sm:text-4xl">Foot Power Rankings</h2>
+      <p class="mt-1 text-sm text-ink/70">The nation's most-talked-about feet, ranked by our crack team of nobody.</p>
+      <ol class="mt-5">
+        {rankings.map((r, i) => (
+          <li class="flex items-center gap-4 border-t border-ink/20 py-3">
+            <span class="w-8 shrink-0 text-center text-3xl text-red" style="font-family: var(--font-headline)">{i + 1}</span>
+            <div class="min-w-0 flex-1">
+              <p class="text-lg leading-none" style="font-family: var(--font-headline)">{r.name}</p>
+              <p class="mt-1 text-xs text-ink/70">{r.note}</p>
+            </div>
+            <div class="shrink-0 text-right">
+              <p class="text-sm tracking-tight text-gold">{r.stars}</p>
+              <p class:list={['dateline text-[11px]', trendColor(r.trend)]}>{r.trend}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="dateline mt-3 text-[10px] text-ink/50">Rankings are a joke and a parody. Feet belong to their owners.</p>
     </div>
-    <div class="sm:border-l sm:border-ink/30 sm:pl-8">
-      <p class="dateline text-xs text-red">Section B</p>
-      <h3 class="mt-1 text-2xl">Follow</h3>
-      <p class="mt-2 leading-relaxed">Head to a creator's own platform to subscribe and support them directly.</p>
-    </div>
-    <div class="sm:border-l sm:border-ink/30 sm:pl-8">
-      <p class="dateline text-xs text-red">Section C</p>
-      <h3 class="mt-1 text-2xl">Get listed</h3>
-      <p class="mt-2 leading-relaxed">A creator? Submit your profile and Footy will review it for the directory.</p>
-    </div>
+
+    <!-- Creator of the Week -->
+    <aside class="self-start border-2 border-ink">
+      <p class="star-band dateline px-3 py-1 text-center text-[11px] tracking-[0.2em]">★ Creator of the Week ★</p>
+      <div class="halftone flex items-center justify-center bg-paper-dim py-8 text-7xl">👣</div>
+      <div class="border-t border-ink p-4">
+        {cotw ? (
+          <>
+            <h3 class="text-2xl leading-none">{cotw.display_name}</h3>
+            <p class="dateline mt-1 text-xs text-ink/70">@{cotw.handle}</p>
+            {cotw.bio && <p class="mt-2 text-sm leading-relaxed">{cotw.bio}</p>}
+            <a href={buildCreatorUrl(cotw.outbound_url)} rel="nofollow noopener" target="_blank" class="mt-4 block border-2 border-ink bg-ink px-4 py-2 text-center text-sm uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">View profile →</a>
+          </>
+        ) : (
+          <>
+            <h3 class="text-2xl leading-tight">This spot's open.</h3>
+            <p class="mt-2 text-sm leading-relaxed">No creator featured yet. It could be you — get in the directory and Footy might just crown you.</p>
+            <a href="/get-featured" class="mt-4 block border-2 border-ink bg-ink px-4 py-2 text-center text-sm uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">Get Featured →</a>
+          </>
+        )}
+      </div>
+    </aside>
+  </section>
+
+  <div class="rule-double"></div>
+
+  <!-- How it works, slim strip -->
+  <section class="grid gap-4 py-8 text-center sm:grid-cols-3">
+    <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">1 · Discover</span> — browse creators, free.</p>
+    <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">2 · Follow</span> — support them on their platform.</p>
+    <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">3 · Get listed</span> — creators, submit your profile.</p>
   </section>
 
   <div class="rule-double"></div>
 
   <!-- From the newsroom -->
-  <section class="py-8">
-    <div class="mb-4 flex items-baseline justify-between">
-      <h3 class="text-3xl">From the Newsroom</h3>
+  <section class="py-10">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <h2 class="text-3xl">From the Newsroom</h2>
       <a href="/news" class="dateline shrink-0 whitespace-nowrap text-xs underline hover:text-red sm:text-sm">All news →</a>
     </div>
     <div class="grid gap-6 sm:grid-cols-3">
@@ -85,7 +145,7 @@ const tickerItems = [
           <p class="dateline text-[11px] text-ink/60">
             {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
           </p>
-          <h4 class="mt-1 text-xl leading-tight">{post.data.title}</h4>
+          <h3 class="mt-1 text-xl leading-tight">{post.data.title}</h3>
           <p class="mt-2 text-sm leading-relaxed">{post.data.description}</p>
         </a>
       ))}
