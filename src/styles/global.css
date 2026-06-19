@@ -1,1 +1,117 @@
 @import "tailwindcss";
+
+@theme {
+  --color-paper: #f2e7c9;
+  --color-paper-dim: #e8d9b4;
+  --color-ink: #1c1813;
+  --color-red: #c8102e;
+  --color-navy: #203a5a;
+  --color-gold: #b8860b;
+
+  --font-masthead: "UnifrakturCook", "Spectral", serif;
+  --font-headline: "Anton", Impact, sans-serif;
+  --font-body: "Spectral", Georgia, serif;
+  --font-type: "Special Elite", "Courier New", monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-headline);
+    font-weight: 400;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+}
+
+/* --- Tabloid utilities --- */
+.halftone {
+  background-image: radial-gradient(var(--color-ink) 1.1px, transparent 1.3px);
+  background-size: 6px 6px;
+}
+.rule-double {
+  border-top: 4px double var(--color-ink);
+}
+.rule-thin {
+  border-top: 1px solid var(--color-ink);
+}
+.stamp {
+  display: inline-block;
+  border: 3px solid var(--color-red);
+  color: var(--color-red);
+  font-family: var(--font-type);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.55rem;
+  transform: rotate(-5deg);
+}
+.dateline {
+  font-family: var(--font-type);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Newspaper article body (rendered Markdown) */
+.article-body > p {
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+.article-body > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-headline);
+  font-size: 3.6rem;
+  line-height: 0.7;
+  padding: 0.15rem 0.5rem 0 0;
+  color: var(--color-red);
+}
+.article-body h2 {
+  font-size: 1.5rem;
+  margin-top: 1.75rem;
+}
+.article-body ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.article-body li {
+  margin-top: 0.3rem;
+}
+.article-body a {
+  text-decoration: underline;
+}
+.article-body strong {
+  font-weight: 700;
+}
+
+/* Breaking-news ticker */
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: inline-flex;
+  gap: 3rem;
+  animation: ticker 28s linear infinite;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}

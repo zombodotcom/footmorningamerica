@@ -1,35 +1,93 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('news', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const tickerItems = [
+  'Local man owns two feet, reportedly “normal about it”',
+  'Sandal futures soar on humid forecast',
+  'Sock industry “concerned,” sources say',
+  'Footy spotted buying lotion in bulk',
+  'Nation’s arches at all-time high',
+];
 ---
 <Base title="Foot Morning America — America's Foot-Content Directory">
-  <section class="mx-auto max-w-4xl px-6 py-20 text-center">
-    <p class="text-sm font-bold uppercase tracking-widest text-red-600">America's foot-content directory 🦶</p>
-    <h1 class="mt-4 text-5xl font-black leading-tight">Foot Morning America</h1>
-    <p class="mt-4 text-xl text-neutral-600">
-      Meet <strong>Footy</strong> — your guide to the best foot creators on the internet.
-      Discover them here, then follow and support them on their own platforms.
-    </p>
-    <div class="mt-10 flex flex-wrap justify-center gap-4">
-      <a href="/directory" class="rounded bg-black px-8 py-4 font-bold text-white">Browse the Directory</a>
-      <a href="/get-featured" class="rounded border-2 border-black px-8 py-4 font-bold">Get Featured</a>
+  <!-- Breaking ticker -->
+  <div class="ticker -mx-4 mb-4 bg-red px-4 py-2 text-paper">
+    <div class="ticker-track">
+      {[...tickerItems, ...tickerItems].map((t) => (
+        <span class="dateline text-xs">★ Breaking Soles: {t}</span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Lead story -->
+  <section class="grid gap-6 pb-8 lg:grid-cols-[1.6fr_1fr]">
+    <div>
+      <p class="stamp text-sm">Extra! Extra!</p>
+      <h1 class="mt-4 text-5xl sm:text-7xl">Every good foot, in one place.</h1>
+      <p class="mt-4 max-w-prose text-lg leading-relaxed">
+        <span class="font-semibold">Foot Morning America</span> is the free directory of the
+        internet's foot creators. Browse them here, then follow and support them on their own
+        platforms. Your host: <span class="font-semibold">Footy</span>.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/directory" class="border-2 border-ink bg-ink px-7 py-3 text-lg uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">Browse the Directory →</a>
+        <a href="/get-featured" class="border-2 border-ink px-7 py-3 text-lg uppercase tracking-wide hover:bg-paper-dim" style="font-family: var(--font-headline)">Get Featured →</a>
+      </div>
+    </div>
+
+    <!-- Footy "file photo" -->
+    <figure class="self-start border-2 border-ink">
+      <div class="halftone flex items-center justify-center bg-paper-dim py-8 text-8xl">🦶</div>
+      <figcaption class="dateline border-t border-ink px-3 py-2 text-[11px]">
+        File photo: Footy, your host. (Actual feet may vary.)
+      </figcaption>
+    </figure>
+  </section>
+
+  <div class="rule-double"></div>
+
+  <!-- How it works, as columns -->
+  <section class="grid gap-x-8 gap-y-6 py-8 sm:grid-cols-3">
+    <div>
+      <p class="dateline text-xs text-red">Section A</p>
+      <h3 class="mt-1 text-2xl">Discover</h3>
+      <p class="mt-2 leading-relaxed">Browse foot creators in the directory — free, no signup, no nonsense.</p>
+    </div>
+    <div class="sm:border-l sm:border-ink/30 sm:pl-8">
+      <p class="dateline text-xs text-red">Section B</p>
+      <h3 class="mt-1 text-2xl">Follow</h3>
+      <p class="mt-2 leading-relaxed">Head to a creator's own platform to subscribe and support them directly.</p>
+    </div>
+    <div class="sm:border-l sm:border-ink/30 sm:pl-8">
+      <p class="dateline text-xs text-red">Section C</p>
+      <h3 class="mt-1 text-2xl">Get listed</h3>
+      <p class="mt-2 leading-relaxed">A creator? Submit your profile and Footy will review it for the directory.</p>
     </div>
   </section>
 
-  <section class="mx-auto max-w-4xl px-6 pb-20">
-    <h2 class="text-2xl font-black">How it works</h2>
-    <ul class="mt-4 grid gap-4 sm:grid-cols-3">
-      <li class="rounded-lg border p-4">
-        <strong>1. Discover</strong>
-        <p class="text-sm text-neutral-500">Browse foot creators in the directory, free.</p>
-      </li>
-      <li class="rounded-lg border p-4">
-        <strong>2. Follow</strong>
-        <p class="text-sm text-neutral-500">Head to their platform to subscribe and support.</p>
-      </li>
-      <li class="rounded-lg border p-4">
-        <strong>3. Get listed</strong>
-        <p class="text-sm text-neutral-500">A creator? Submit your profile to get featured.</p>
-      </li>
-    </ul>
+  <div class="rule-double"></div>
+
+  <!-- From the newsroom -->
+  <section class="py-8">
+    <div class="mb-4 flex items-baseline justify-between">
+      <h3 class="text-3xl">From the Newsroom</h3>
+      <a href="/news" class="dateline text-sm underline hover:text-red">All foot news →</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {posts.map((post) => (
+        <a href={`/news/${post.id}`} class="block border border-ink/40 p-4 hover:bg-paper-dim">
+          <p class="dateline text-[11px] text-ink/60">
+            {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+          </p>
+          <h4 class="mt-1 text-xl leading-tight">{post.data.title}</h4>
+          <p class="mt-2 text-sm leading-relaxed">{post.data.description}</p>
+        </a>
+      ))}
+    </div>
   </section>
 </Base>

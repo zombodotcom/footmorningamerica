@@ -2,15 +2,26 @@
 import { buildCreatorUrl } from '../lib/affiliate';
 const { listing } = Astro.props;
 const href = buildCreatorUrl(listing.outbound_url);
+const platformLabel: Record<string, string> = {
+  onlyfans: 'OnlyFans',
+  feetfinder: 'FeetFinder',
+  fansly: 'Fansly',
+  other: 'Web',
+};
 ---
-<article data-testid="creator-card" class="rounded-lg border border-neutral-200 p-4">
-  <h3 class="font-bold">{listing.display_name}</h3>
-  <p class="text-sm text-neutral-500">{listing.platform} · @{listing.handle}</p>
-  {listing.bio && <p class="mt-2 text-sm">{listing.bio}</p>}
+<article data-testid="creator-card" class="flex flex-col border-2 border-ink bg-paper p-4">
+  <div class="flex items-center justify-between">
+    <p class="dateline text-[10px] text-ink/60">Classified</p>
+    <p class="dateline text-[10px] text-red">{platformLabel[listing.platform] ?? 'Web'}</p>
+  </div>
+  <h3 class="mt-1 text-2xl leading-none">{listing.display_name}</h3>
+  <p class="dateline mt-1 text-xs text-ink/70">@{listing.handle}</p>
+  {listing.bio && <p class="mt-2 text-sm leading-relaxed">{listing.bio}</p>}
   <a
     href={href}
     rel="nofollow noopener"
     target="_blank"
-    class="mt-3 inline-block rounded bg-black px-4 py-2 text-sm font-bold text-white"
-  >View →</a>
+    class="mt-4 border-2 border-ink bg-ink px-4 py-2 text-center text-sm uppercase tracking-wide text-paper hover:bg-red"
+    style="font-family: var(--font-headline)"
+  >View profile →</a>
 </article>

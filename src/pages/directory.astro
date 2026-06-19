@@ -7,11 +7,22 @@ import { getApprovedListings } from '../lib/listings.repo';
 const listings = await getApprovedListings(anonClient());
 ---
 <Base title="Directory — Foot Morning America" gated={true}>
-  <section class="mx-auto max-w-5xl px-6 py-12">
-    <h1 class="text-3xl font-black">The Footy Directory</h1>
-    <p class="mt-2 text-neutral-500">{listings.length} creators and counting.</p>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {listings.map((l) => <CreatorCard listing={l} />)}
+  <section class="py-8">
+    <div class="flex items-end justify-between">
+      <h1 class="text-4xl sm:text-5xl">The Classifieds</h1>
+      <p class="stamp text-xs">18+ Only</p>
     </div>
+    <p class="dateline mt-2 text-xs text-ink/60">
+      The Foot Directory · {listings.length} {listings.length === 1 ? 'listing' : 'listings'} and counting · all links go to creators' own platforms
+    </p>
+    <div class="rule-double mt-3"></div>
+
+    {listings.length === 0 ? (
+      <p class="py-12 text-center text-lg">No listings yet. Be the first — <a href="/get-featured" class="underline hover:text-red">get featured</a>.</p>
+    ) : (
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {listings.map((l) => <CreatorCard listing={l} />)}
+      </div>
+    )}
   </section>
 </Base>

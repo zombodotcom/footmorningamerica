@@ -1,29 +1,55 @@
 ---
 import Base from '../layouts/Base.astro';
+const field = 'w-full border-2 border-ink bg-paper p-3 focus:bg-paper-dim';
 ---
 <Base title="Get Featured — Foot Morning America">
-  <section class="mx-auto max-w-lg px-6 py-12">
-    <h1 class="text-3xl font-black">Get on Foot Morning America</h1>
-    <p class="mt-2 text-neutral-500">Submit your profile. We review every listing before it goes live.</p>
+  <section class="mx-auto max-w-xl py-8">
+    <div class="flex items-end justify-between">
+      <h1 class="text-4xl sm:text-5xl">Place Your Ad</h1>
+      <p class="stamp text-xs">Free Listing</p>
+    </div>
+    <p class="dateline mt-2 text-xs text-ink/60">Get featured in the Foot Directory · Footy reviews every listing before it runs</p>
+    <div class="rule-double mt-3"></div>
 
-    <p id="submitted-banner" class="mt-6 hidden rounded bg-green-100 p-3 text-green-800">
-      Thanks! Your listing is in review.
+    <p id="submitted-banner" class="mt-6 hidden border-2 border-ink bg-ink p-4 text-center text-paper">
+      <span class="text-xl uppercase" style="font-family: var(--font-headline)">Stop the presses!</span><br />
+      <span class="text-sm">Your listing is in review. Footy will take a look.</span>
     </p>
 
-    <form method="POST" action="/api/submit" enctype="multipart/form-data" class="mt-8 grid gap-4">
-      <input name="display_name" required placeholder="Display name" class="rounded border p-3" />
-      <select name="platform" required class="rounded border p-3">
-        <option value="">Platform…</option>
-        <option value="onlyfans">OnlyFans</option>
-        <option value="feetfinder">FeetFinder</option>
-        <option value="fansly">Fansly</option>
-        <option value="other">Other</option>
-      </select>
-      <input name="handle" required placeholder="@handle" class="rounded border p-3" />
-      <input name="outbound_url" required type="url" placeholder="https://… your profile link" class="rounded border p-3" />
-      <textarea name="bio" placeholder="Short bio" class="rounded border p-3"></textarea>
-      <input name="photo" type="file" accept="image/*" class="rounded border p-3" />
-      <button class="rounded bg-black px-6 py-3 font-bold text-white">Submit for review</button>
+    <form method="POST" action="/api/submit" enctype="multipart/form-data" class="mt-6 grid gap-4">
+      <label class="grid gap-1">
+        <span class="dateline text-xs">Display name</span>
+        <input name="display_name" required placeholder="What should we call you?" class={field} />
+      </label>
+      <label class="grid gap-1">
+        <span class="dateline text-xs">Platform</span>
+        <select name="platform" required class={field}>
+          <option value="">Choose a platform…</option>
+          <option value="onlyfans">OnlyFans</option>
+          <option value="feetfinder">FeetFinder</option>
+          <option value="fansly">Fansly</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+      <label class="grid gap-1">
+        <span class="dateline text-xs">Handle</span>
+        <input name="handle" required placeholder="@yourhandle" class={field} />
+      </label>
+      <label class="grid gap-1">
+        <span class="dateline text-xs">Profile link</span>
+        <input name="outbound_url" required type="url" placeholder="https://… your profile" class={field} />
+      </label>
+      <label class="grid gap-1">
+        <span class="dateline text-xs">Short bio</span>
+        <textarea name="bio" rows="3" placeholder="Tell the readers about yourself" class={field}></textarea>
+      </label>
+      <label class="grid gap-1">
+        <span class="dateline text-xs">Photo <span class="text-ink/50">(optional, jpg/png/webp/gif, max 5MB)</span></span>
+        <input name="photo" type="file" accept="image/*" class={field} />
+      </label>
+      <button class="mt-2 border-2 border-ink bg-ink px-6 py-3 text-lg uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">
+        Submit for review →
+      </button>
     </form>
   </section>
 </Base>
