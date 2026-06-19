@@ -1070,7 +1070,8 @@ git commit -m "chore: netlify build config"
 
 - [ ] Replace `PLACEHOLDER_*` affiliate refs in `affiliate.config.ts` with real codes once accounts exist.
 - [ ] One-time consult with adult-industry counsel re: linking-as-distribution under state AV laws (spec §6).
-- [ ] Confirm adult-link content stays well under one-third of total site content (spec §6).
+- [ ] **Vet the brand name + parody positioning** with the same counsel — "Foot Morning America" riffs on the famous "Good Morning America" mark; primary risk is trademark dilution/tarnishment (famous family-TV brand ↔ adult content). Mitigation already applied: no visual mimicry of GMA (logo/font/color stripes/initialisms), original Footy mascot, no taglines that literally echo GMA.
+- [ ] Confirm adult-link content stays well under one-third of total site content (spec §6) — SFW `/news` posts are the buffer; keep them flowing.
 - [ ] Verify FeetFinder/Fansly affiliate terms directly before relying on payout figures.
 
 ---

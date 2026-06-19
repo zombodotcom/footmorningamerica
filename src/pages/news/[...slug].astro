@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Base title={`${post.data.title} — Foot Morning America`}>
+  <article class="mx-auto max-w-2xl px-6 py-12">
+    <a href="/news" class="text-sm text-neutral-500 underline">← All news</a>
+    <h1 class="mt-4 text-3xl font-black">{post.data.title}</h1>
+    <p class="mt-1 text-sm text-neutral-500">
+      {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </p>
+    <div class="prose mt-6 max-w-none [&_a]:underline [&_h2]:mt-6 [&_h2]:font-bold [&_li]:ml-5 [&_li]:list-disc [&_p]:mt-3">
+      <Content />
+    </div>
+  </article>
+</Base>
