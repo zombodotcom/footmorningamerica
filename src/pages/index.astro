@@ -3,8 +3,26 @@ import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { anonClient } from '../lib/supabase';
 import { getApprovedListings } from '../lib/listings.repo';
-import { buildCreatorUrl } from '../lib/affiliate';
+import { buildCreatorUrl, buildPlatformSignupUrl } from '../lib/affiliate';
 import RankRow from '../components/RankRow.astro';
+import FeedCard from '../components/FeedCard.astro';
+
+const feetfinderUrl = buildPlatformSignupUrl('feetfinder');
+
+const feed = [
+  { kind: 'cover', title: 'She looked down. What she saw will shock you.', sub: '(It was feet.)' },
+  { kind: 'forecast', title: 'Today: 73°, light breeze, 100% chance of sandals.' },
+  { kind: 'quote', title: '“I have two of them.”', sub: '— Local man, on his feet' },
+  { kind: 'stars', title: 'New Arch Rating', sub: '★★★★★' },
+  { kind: 'breaking', title: 'Sock market crashes as summer arrives' },
+  { kind: 'classified', title: 'WANTED: someone to appreciate these feet. Will travel.' },
+  { kind: 'cover', title: 'Exclusive: the toes America is talking about' },
+  { kind: 'quote', title: '“Best site I never told anyone I visit.”', sub: '— Anonymous reader' },
+  { kind: 'forecast', title: 'Extended toe-cast: sunny through the weekend.' },
+  { kind: 'breaking', title: 'Study: looking at feet is “probably fine,” scientists shrug' },
+  { kind: 'stars', title: 'Footy Approved', sub: '★★★★★' },
+  { kind: 'classified', title: 'FOR SALE: pristine feet pics. Inquire within (the directory).' },
+];
 
 const posts = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -115,11 +133,42 @@ const rankings = [
 
   <div class="rule-double"></div>
 
+  <!-- The Feed (meme wall) -->
+  <section class="py-10">
+    <div class="mb-5 flex items-baseline justify-between gap-4">
+      <h2 class="text-3xl">The Feed</h2>
+      <p class="dateline shrink-0 text-[11px] text-red">Updated constantly*</p>
+    </div>
+    <div class="columns-2 gap-4 sm:columns-3">
+      {feed.map((c) => <FeedCard kind={c.kind} title={c.title} sub={c.sub} />)}
+    </div>
+    <p class="dateline mt-2 text-[10px] text-ink/50">*Footy's definition of "constantly" may differ from yours.</p>
+  </section>
+
+  <div class="rule-double"></div>
+
   <!-- How it works, slim strip -->
   <section class="grid gap-4 py-8 text-center sm:grid-cols-3">
     <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">1 · Discover</span> — browse creators, free.</p>
     <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">2 · Follow</span> — support them on their platform.</p>
     <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">3 · Get listed</span> — creators, submit your profile.</p>
+  </section>
+
+  <div class="rule-double"></div>
+
+  <!-- For creators CTA -->
+  <section class="my-4 border-2 border-ink">
+    <p class="star-band dateline px-4 py-1 text-center text-[11px] tracking-[0.2em]">★ Calling All Creators ★</p>
+    <div class="grid gap-6 p-6 sm:grid-cols-[1.4fr_1fr] sm:items-center">
+      <div>
+        <h2 class="text-3xl">Turn feet into income.</h2>
+        <p class="mt-2 leading-relaxed text-ink/80">Get listed in the directory for free, or start your own foot-content shop. Footy roots for you either way.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <a href="/get-featured" class="border-2 border-ink bg-ink px-5 py-3 text-center text-base uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">Get Featured Free →</a>
+        <a href={feetfinderUrl} rel="nofollow noopener sponsored" target="_blank" class="border-2 border-ink px-5 py-3 text-center text-base uppercase tracking-wide hover:bg-paper-dim" style="font-family: var(--font-headline)">Start Selling on FeetFinder →</a>
+      </div>
+    </div>
   </section>
 
   <div class="rule-double"></div>
