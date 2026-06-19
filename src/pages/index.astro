@@ -24,6 +24,12 @@ const feed = [
   { kind: 'classified', title: 'FOR SALE: pristine feet pics. Inquire within (the directory).' },
 ];
 
+const steps = [
+  { n: '1', label: 'Discover', note: 'Browse foot creators in the directory, free.' },
+  { n: '2', label: 'Follow', note: 'Support them on their own platform.' },
+  { n: '3', label: 'Get listed', note: 'Creators: submit your profile to be featured.' },
+];
+
 const posts = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
@@ -147,11 +153,20 @@ const rankings = [
 
   <div class="rule-double"></div>
 
-  <!-- How it works, slim strip -->
-  <section class="grid gap-4 py-8 text-center sm:grid-cols-3">
-    <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">1 · Discover</span> — browse creators, free.</p>
-    <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">2 · Follow</span> — support them on their platform.</p>
-    <p class="text-sm"><span class="text-red" style="font-family: var(--font-headline)">3 · Get listed</span> — creators, submit your profile.</p>
+  <!-- How it works -->
+  <section class="py-8">
+    <p class="dateline mb-3 text-xs text-red">How it works</p>
+    <div class="sm:grid sm:grid-cols-3 sm:gap-6">
+      {steps.map((s) => (
+        <div class="flex items-center gap-4 border-t border-ink/20 py-4 sm:flex-col sm:items-start sm:border-t-0 sm:py-0">
+          <span class="shrink-0 text-4xl text-red sm:text-5xl" style="font-family: var(--font-headline)">{s.n}</span>
+          <div>
+            <p class="text-xl leading-none" style="font-family: var(--font-headline)">{s.label}</p>
+            <p class="mt-1 text-sm text-ink/70">{s.note}</p>
+          </div>
+        </div>
+      ))}
+    </div>
   </section>
 
   <div class="rule-double"></div>
