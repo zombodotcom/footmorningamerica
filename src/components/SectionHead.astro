@@ -1,0 +1,18 @@
+---
+const { eyebrow, title, sub, href, linkText = 'See all →' } = Astro.props;
+---
+<div class="mb-6 border-b-2 border-ink pb-3">
+  <div class="flex items-end justify-between gap-4">
+    <div>
+      {eyebrow && <p class="dateline text-xs text-red">{eyebrow}</p>}
+      <h2 class="mt-1 text-3xl sm:text-4xl">{title}</h2>
+    </div>
+    {href && (
+      <a
+        href={href}
+        class="dateline shrink-0 whitespace-nowrap pb-1 text-xs underline hover:text-red sm:text-sm"
+      >{linkText}</a>
+    )}
+  </div>
+  {sub && <p class="mt-2 text-sm text-ink/70">{sub}</p>}
+</div>

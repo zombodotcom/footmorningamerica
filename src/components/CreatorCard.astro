@@ -9,7 +9,7 @@ const platformLabel: Record<string, string> = {
   other: 'Web',
 };
 ---
-<article data-testid="creator-card" class="flex flex-col border-2 border-ink bg-paper p-4">
+<article data-testid="creator-card" class="print-hover flex flex-col border-2 border-ink bg-paper p-4">
   <div class="flex items-center justify-between">
     <p class="dateline text-[10px] text-ink/60">Classified</p>
     <p class="dateline text-[10px] text-red">{platformLabel[listing.platform] ?? 'Web'}</p>

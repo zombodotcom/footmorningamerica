@@ -77,6 +77,27 @@
   letter-spacing: 0.1em;
 }
 
+/* Modern offset "print" shadows for cards */
+.print-card {
+  box-shadow: 5px 5px 0 0 var(--color-ink);
+}
+.print-hover {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 5px 5px 0 0 var(--color-ink);
+}
+.print-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 0 var(--color-red);
+}
+@media (prefers-reduced-motion: reduce) {
+  .print-hover {
+    transition: none;
+  }
+  .print-hover:hover {
+    transform: none;
+  }
+}
+
 /* Newspaper article body (rendered Markdown) */
 .article-body > p {
   margin-top: 1rem;
