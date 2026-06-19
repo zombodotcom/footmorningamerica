@@ -9,12 +9,22 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/netlify": "^7.0.13",
+    "@supabase/supabase-js": "^2.95.0",
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^6.4.7",
     "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@playwright/test": "^1.61.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
   }
 }

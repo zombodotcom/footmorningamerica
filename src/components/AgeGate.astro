@@ -1,0 +1,18 @@
+---
+---
+<div id="age-gate" data-testid="age-gate" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 text-white">
+  <div class="max-w-md p-8 text-center">
+    <h2 class="text-2xl font-bold">This area is for adults.</h2>
+    <p class="mt-2">Foot Morning America links to content intended for adults 18+.</p>
+    <button id="age-ok" class="mt-6 rounded bg-white px-6 py-3 font-bold text-black">I am 18 or older</button>
+  </div>
+</div>
+<script>
+  const KEY = 'fma-age-ok';
+  const gate = document.getElementById('age-gate')!;
+  if (localStorage.getItem(KEY) !== 'yes') gate.classList.replace('hidden', 'flex');
+  document.getElementById('age-ok')?.addEventListener('click', () => {
+    localStorage.setItem(KEY, 'yes');
+    gate.classList.replace('flex', 'hidden');
+  });
+</script>

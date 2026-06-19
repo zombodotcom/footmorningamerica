@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import CreatorCard from '../components/CreatorCard.astro';
+import { anonClient } from '../lib/supabase';
+import { getApprovedListings } from '../lib/listings.repo';
+
+const listings = await getApprovedListings(anonClient());
+---
+<Base title="Directory — Foot Morning America" gated={true}>
+  <section class="mx-auto max-w-5xl px-6 py-12">
+    <h1 class="text-3xl font-black">The Footy Directory</h1>
+    <p class="mt-2 text-neutral-500">{listings.length} creators and counting.</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {listings.map((l) => <CreatorCard listing={l} />)}
+    </div>
+  </section>
+</Base>
