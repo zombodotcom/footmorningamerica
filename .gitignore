@@ -9,3 +9,6 @@ test-results/
 playwright-report/
 .playwright-mcp/
 /*.png
+
+# raw source images (originals kept locally; optimized copies live in public/img)
+exampleImages/
