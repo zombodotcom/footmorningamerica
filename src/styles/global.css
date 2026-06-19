@@ -44,6 +44,17 @@
   background-image: radial-gradient(var(--color-ink) 1.1px, transparent 1.3px);
   background-size: 6px 6px;
 }
+.flag-stripes {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--color-red) 0 3px,
+    #fbf7ea 3px 6px
+  );
+}
+.star-band {
+  background-color: var(--color-navy);
+  color: var(--color-paper);
+}
 .rule-double {
   border-top: 4px double var(--color-ink);
 }

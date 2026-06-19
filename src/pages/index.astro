@@ -42,6 +42,7 @@ const tickerItems = [
 
     <!-- Footy "file photo" -->
     <figure class="self-start border-2 border-ink">
+      <p class="star-band dateline px-3 py-1 text-center text-[10px] tracking-[0.25em]">★ America's Host ★</p>
       <div class="halftone flex items-center justify-center bg-paper-dim py-8 text-8xl">🦶</div>
       <figcaption class="dateline border-t border-ink px-3 py-2 text-[11px]">
         File photo: Footy, your host. (Actual feet may vary.)
@@ -76,7 +77,7 @@ const tickerItems = [
   <section class="py-8">
     <div class="mb-4 flex items-baseline justify-between">
       <h3 class="text-3xl">From the Newsroom</h3>
-      <a href="/news" class="dateline text-sm underline hover:text-red">All foot news →</a>
+      <a href="/news" class="dateline shrink-0 whitespace-nowrap text-xs underline hover:text-red sm:text-sm">All news →</a>
     </div>
     <div class="grid gap-6 sm:grid-cols-3">
       {posts.map((post) => (

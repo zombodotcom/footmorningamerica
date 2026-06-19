@@ -28,20 +28,28 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     <title>{title}</title>
   </head>
   <body class="min-h-screen">
-    <header class="mx-auto max-w-6xl px-4 pt-4">
+    <!-- Old-glory stripe band -->
+    <div class="flag-stripes h-2.5 w-full"></div>
+
+    <header class="mx-auto max-w-6xl px-4 pt-3 sm:pt-4">
       <!-- Masthead -->
-      <div class="grid grid-cols-3 items-end gap-2 pb-2">
-        <p class="dateline text-[10px] leading-tight sm:text-xs">
+      <div class="grid grid-cols-1 items-end gap-1 pb-2 sm:grid-cols-3 sm:gap-2">
+        <p class="dateline hidden text-[10px] leading-tight sm:block sm:text-xs">
           Vol. I — No. 1<br />Weekend Edition<br />Est. This Morning
         </p>
-        <p style="font-family: var(--font-masthead)" class="text-center text-3xl leading-none sm:text-5xl">
+        <p style="font-family: var(--font-masthead)" class="text-center text-4xl leading-none sm:text-5xl">
           <a href="/">Foot Morning America</a>
         </p>
-        <p class="dateline text-right text-[10px] leading-tight sm:text-xs">
+        <p class="dateline hidden text-right text-[10px] leading-tight sm:block sm:text-xs">
           Price: Free<br />Forecast: Toes Out<br />Weather: Humid
         </p>
       </div>
-      <div class="rule-double"></div>
+      <!-- Star band -->
+      <div class="star-band -mx-4 px-4 py-1 text-center">
+        <p class="dateline text-[9px] tracking-[0.3em] sm:text-[11px] sm:tracking-[0.35em]">
+          ★ ★ ★&ensp;The United States of Feet&ensp;★ ★ ★
+        </p>
+      </div>
       <!-- Section index -->
       <nav class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 py-2 text-xs sm:text-sm" aria-label="Sections">
         {sections.map((s) => (
@@ -55,7 +63,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
           >{s.label}</a>
         ))}
       </nav>
-      <div class="rule-thin"></div>
+      <div class="rule-double"></div>
     </header>
 
     <main class="mx-auto max-w-6xl px-4"><slot /></main>
