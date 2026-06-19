@@ -197,12 +197,17 @@ const rankings = [
     <SectionHead eyebrow="Latest" title="From the Newsroom" href="/news" linkText="All news →" />
     <div class="grid gap-6 sm:grid-cols-3">
       {posts.map((post) => (
-        <a href={`/news/${post.id}`} class="print-hover block border-2 border-ink bg-paper p-4">
-          <p class="dateline text-[11px] text-ink/60">
-            {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
-          </p>
-          <h3 class="mt-1 text-xl leading-tight">{post.data.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed">{post.data.description}</p>
+        <a href={`/news/${post.id}`} class="print-hover block border-2 border-ink bg-paper">
+          {post.data.heroImage && (
+            <img src={post.data.heroImage} alt="" class="h-36 w-full border-b-2 border-ink object-cover" loading="lazy" decoding="async" />
+          )}
+          <div class="p-4">
+            <p class="dateline text-[11px] text-ink/60">
+              {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+            </p>
+            <h3 class="mt-1 text-xl leading-tight">{post.data.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed">{post.data.description}</p>
+          </div>
         </a>
       ))}
     </div>
