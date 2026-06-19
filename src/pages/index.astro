@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { anonClient } from '../lib/supabase';
 import { getApprovedListings } from '../lib/listings.repo';
 import { buildCreatorUrl } from '../lib/affiliate';
+import RankRow from '../components/RankRow.astro';
 
 const posts = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -35,7 +36,6 @@ const rankings = [
   { name: 'Margot Robbie', stars: '★★★★☆', trend: '▼', note: 'Slight dip. Still box-office feet.' },
   { name: 'Mila Kunis', stars: '★★★★☆', trend: '▲', note: 'Quiet climber, No. 19 and rising.' },
 ];
-const trendColor = (t: string) => (t === '▲' ? 'text-navy' : t === '▼' ? 'text-red' : 'text-ink/40');
 ---
 <Base title="Foot Morning America — America's Foot-Content Directory">
   <!-- Breaking ticker -->
@@ -83,19 +83,10 @@ const trendColor = (t: string) => (t === '▲' ? 'text-navy' : t === '▼' ? 'te
       <p class="mt-1 text-sm text-ink/70">The nation's most-talked-about feet, ranked by our crack team of nobody.</p>
       <ol class="mt-5">
         {rankings.map((r, i) => (
-          <li class="flex items-center gap-4 border-t border-ink/20 py-3">
-            <span class="w-8 shrink-0 text-center text-3xl text-red" style="font-family: var(--font-headline)">{i + 1}</span>
-            <div class="min-w-0 flex-1">
-              <p class="text-lg leading-none" style="font-family: var(--font-headline)">{r.name}</p>
-              <p class="mt-1 text-xs text-ink/70">{r.note}</p>
-            </div>
-            <div class="shrink-0 text-right">
-              <p class="text-sm tracking-tight text-gold">{r.stars}</p>
-              <p class:list={['dateline text-[11px]', trendColor(r.trend)]}>{r.trend}</p>
-            </div>
-          </li>
+          <RankRow rank={i + 1} name={r.name} stars={r.stars} trend={r.trend} note={r.note} />
         ))}
       </ol>
+      <a href="/feet-of-fame" class="dateline mt-4 inline-block text-sm underline hover:text-red">See the full Feet of Fame →</a>
       <p class="dateline mt-3 text-[10px] text-ink/50">Rankings are a joke and a parody. Feet belong to their owners.</p>
     </div>
 

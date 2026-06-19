@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import RankRow from '../components/RankRow.astro';
+
+// Parody power rankings of public figures, à la WikiFeet culture. SFW, satirical.
+const categories = [
+  {
+    name: 'Hollywood',
+    blurb: 'The silver screen, from the ankle down.',
+    feet: [
+      { name: 'Emma Stone', stars: '★★★★★', trend: '—', note: 'Reigning champ. The arches that launched a thousand think-pieces.' },
+      { name: 'Emma Watson', stars: '★★★★★', trend: '▲', note: 'Accio attention. A perennial top seed.' },
+      { name: 'Margot Robbie', stars: '★★★★☆', trend: '▼', note: 'Box-office feet take a rare dip this week.' },
+      { name: 'Megan Fox', stars: '★★★★☆', trend: '▲', note: 'A franchise unto herself in this category.' },
+      { name: 'Scarlett Johansson', stars: '★★★★☆', trend: '—', note: 'Consistent five-star energy, year after year.' },
+      { name: 'Jennifer Lawrence', stars: '★★★★☆', trend: '▲', note: 'Relatable feet of the people.' },
+    ],
+  },
+  {
+    name: 'Music',
+    blurb: 'Chart-toppers and the toes that carry them.',
+    feet: [
+      { name: 'Selena Gomez', stars: '★★★★☆', trend: '▲', note: 'Surging hard in the polls this week.' },
+      { name: 'Taylor Swift', stars: '★★★★☆', trend: '▲', note: 'Cracked the top 10. The Swifties have mobilized.' },
+      { name: 'Ariana Grande', stars: '★★★★☆', trend: '—', note: 'Petite and precise. Critics approve.' },
+      { name: 'Rihanna', stars: '★★★★★', trend: '▲', note: 'A mogul in every category, this one included.' },
+      { name: 'Billie Eilish', stars: '★★★☆☆', trend: '▲', note: 'The dark horse. Anti-establishment arches.' },
+    ],
+  },
+  {
+    name: 'Internet & Reality',
+    blurb: 'Famous for being famous, feet included.',
+    feet: [
+      { name: 'Khloé Kardashian', stars: '★★★★☆', trend: '—', note: 'A five-star fixture of the genre.' },
+      { name: 'Sofía Vergara', stars: '★★★★☆', trend: '▲', note: 'Modern Family, classic feet.' },
+      { name: 'Heidi Klum', stars: '★★★★☆', trend: '—', note: 'Project Runway, runway-ready feet.' },
+      { name: 'Mila Kunis', stars: '★★★★☆', trend: '▲', note: 'Quiet climber. No. 19 overall and rising.' },
+    ],
+  },
+];
+---
+<Base title="Feet of Fame — Foot Morning America">
+  <section class="py-10">
+    <p class="stamp text-sm">Hall of Fame</p>
+    <h1 class="mt-5 text-5xl sm:text-7xl">Feet of Fame</h1>
+    <p class="mt-4 max-w-prose text-lg leading-relaxed">
+      America's most-talked-about feet, ranked by category, updated whenever Footy gets around to it.
+      A loving parody of internet foot culture. No photos, no nonsense — just the standings.
+    </p>
+    <p class="dateline mt-2 text-[11px] text-ink/50">It's a joke. Rankings are satire. Feet belong to their owners.</p>
+  </section>
+
+  {categories.map((cat) => (
+    <section class="pb-10">
+      <div class="rule-double"></div>
+      <div class="flex items-baseline justify-between gap-4 pt-5">
+        <h2 class="text-3xl sm:text-4xl">{cat.name}</h2>
+        <p class="dateline shrink-0 text-[11px] text-red">Standings</p>
+      </div>
+      <p class="mt-1 text-sm text-ink/70">{cat.blurb}</p>
+      <ol class="mt-4">
+        {cat.feet.map((f, i) => (
+          <RankRow rank={i + 1} name={f.name} stars={f.stars} trend={f.trend} note={f.note} />
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  <div class="rule-double"></div>
+  <section class="py-10 text-center">
+    <h2 class="text-3xl">Want feet you can actually follow?</h2>
+    <p class="mt-2 text-ink/70">These celebs aren't in the directory. Real creators are.</p>
+    <a href="/directory" class="mt-5 inline-block border-2 border-ink bg-ink px-8 py-3 text-lg uppercase tracking-wide text-paper hover:bg-red" style="font-family: var(--font-headline)">Browse the Directory →</a>
+  </section>
+</Base>

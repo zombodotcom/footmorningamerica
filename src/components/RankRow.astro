@@ -1,0 +1,15 @@
+---
+const { rank, name, stars, trend = '—', note } = Astro.props;
+const trendColor = trend === '▲' ? 'text-navy' : trend === '▼' ? 'text-red' : 'text-ink/40';
+---
+<li class="flex items-center gap-4 border-t border-ink/20 py-3">
+  <span class="w-8 shrink-0 text-center text-3xl text-red" style="font-family: var(--font-headline)">{rank}</span>
+  <div class="min-w-0 flex-1">
+    <p class="text-lg leading-none" style="font-family: var(--font-headline)">{name}</p>
+    {note && <p class="mt-1 text-xs text-ink/70">{note}</p>}
+  </div>
+  <div class="shrink-0 text-right">
+    <p class="text-sm tracking-tight text-gold">{stars}</p>
+    <p class:list={['dateline text-[11px]', trendColor]}>{trend}</p>
+  </div>
+</li>
