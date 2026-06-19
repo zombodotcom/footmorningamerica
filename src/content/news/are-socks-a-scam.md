@@ -2,6 +2,7 @@
 title: "Footy Investigates: Are Socks a Scam?"
 description: "A hard-hitting exposé into the fabric tubes Big Sock doesn't want you to question."
 pubDate: 2026-06-15
+heroImage: "/img/feet-sandals.jpg"
 ---
 
 For decades, we were told we needed them. Two per foot. Sometimes more. But this reporter has questions.

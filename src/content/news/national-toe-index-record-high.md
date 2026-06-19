@@ -2,6 +2,7 @@
 title: "Breaking Soles: National Toe Index Hits Record High"
 description: "Economists baffled as America's feet enter unprecedented bull market."
 pubDate: 2026-06-16
+heroImage: "/img/feet-cozy.jpg"
 ---
 
 The **National Toe Index (NTI)** closed at an all-time high this morning, capping a remarkable summer rally that has left analysts scrambling for their sandals.

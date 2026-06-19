@@ -2,6 +2,11 @@
 import { buildCreatorUrl } from '../lib/affiliate';
 const { listing } = Astro.props;
 const href = buildCreatorUrl(listing.outbound_url);
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const photoUrl =
+  listing.photo_path && supabaseUrl
+    ? `${supabaseUrl}/storage/v1/object/public/creator-photos/${listing.photo_path}`
+    : null;
 const platformLabel: Record<string, string> = {
   onlyfans: 'OnlyFans',
   feetfinder: 'FeetFinder',
@@ -9,19 +14,26 @@ const platformLabel: Record<string, string> = {
   other: 'Web',
 };
 ---
-<article data-testid="creator-card" class="print-hover flex flex-col border-2 border-ink bg-paper p-4">
-  <div class="flex items-center justify-between">
-    <p class="dateline text-[10px] text-ink/60">Classified</p>
-    <p class="dateline text-[10px] text-red">{platformLabel[listing.platform] ?? 'Web'}</p>
+<article data-testid="creator-card" class="print-hover flex flex-col border-2 border-ink bg-paper">
+  {photoUrl ? (
+    <img src={photoUrl} alt={listing.display_name} class="h-44 w-full border-b-2 border-ink object-cover" loading="lazy" decoding="async" />
+  ) : (
+    <div class="halftone flex h-44 w-full items-center justify-center border-b-2 border-ink bg-paper-dim text-6xl" aria-hidden="true">🦶</div>
+  )}
+  <div class="flex flex-1 flex-col p-4">
+    <div class="flex items-center justify-between">
+      <p class="dateline text-[10px] text-ink/60">Classified</p>
+      <p class="dateline text-[10px] text-red">{platformLabel[listing.platform] ?? 'Web'}</p>
+    </div>
+    <h3 class="mt-1 text-2xl leading-none">{listing.display_name}</h3>
+    <p class="dateline mt-1 text-xs text-ink/70">@{listing.handle}</p>
+    {listing.bio && <p class="mt-2 text-sm leading-relaxed">{listing.bio}</p>}
+    <a
+      href={href}
+      rel="nofollow noopener"
+      target="_blank"
+      class="mt-4 border-2 border-ink bg-ink px-4 py-2 text-center text-sm uppercase tracking-wide text-paper hover:bg-red"
+      style="font-family: var(--font-headline)"
+    >View profile →</a>
   </div>
-  <h3 class="mt-1 text-2xl leading-none">{listing.display_name}</h3>
-  <p class="dateline mt-1 text-xs text-ink/70">@{listing.handle}</p>
-  {listing.bio && <p class="mt-2 text-sm leading-relaxed">{listing.bio}</p>}
-  <a
-    href={href}
-    rel="nofollow noopener"
-    target="_blank"
-    class="mt-4 border-2 border-ink bg-ink px-4 py-2 text-center text-sm uppercase tracking-wide text-paper hover:bg-red"
-    style="font-family: var(--font-headline)"
-  >View profile →</a>
 </article>

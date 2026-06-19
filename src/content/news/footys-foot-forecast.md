@@ -2,6 +2,7 @@
 title: "Footy's Foot Forecast: Sandal Season Arrives Early"
 description: "A nationwide look at the week ahead in feet."
 pubDate: 2026-06-17
+heroImage: "/img/feet-sand.jpg"
 ---
 
 Grab your sunscreen and your second-best flip-flops, America — **sandal season** is rolling in three weeks ahead of schedule.

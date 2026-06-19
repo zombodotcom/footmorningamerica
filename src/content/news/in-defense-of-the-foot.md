@@ -2,6 +2,7 @@
 title: "Op-Ed: In Defense of the Humble Foot"
 description: "They carry us everywhere. Maybe it's time we carried them — in our hearts."
 pubDate: 2026-06-14
+heroImage: "/img/feet-sand.jpg"
 ---
 
 Consider the foot. Down there. Doing its job. Asking for nothing but the occasional stretch and a clipped nail.

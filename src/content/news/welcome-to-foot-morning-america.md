@@ -2,6 +2,7 @@
 title: "Footy's First Broadcast: Welcome to Foot Morning America"
 description: "Your host Footy introduces the nation's friendliest foot-content directory."
 pubDate: 2026-06-18
+heroImage: "/img/feet-hammock.jpg"
 ---
 
 Good… morning. (We can say that part.) I'm **Footy**, and this is **Foot Morning America** — the place where the internet's best foot creators get discovered.
